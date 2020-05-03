@@ -7,7 +7,7 @@ from sklearn.model_selection import GridSearchCV
 
 PIE_PATH = 'PIE_32x32'
 YALE_PATH = 'YaleB_32x32'
-NumFILES = 5
+NumFILES = 10
 
 def load_face_file(path):
     raw_file = np.loadtxt(path)
@@ -83,8 +83,8 @@ def train_knn(X, y):
   return model
 
 if __name__ == '__main__':
-    pie_train_X, pie_train_y, pie_test_X, pie_test_y = load_all_faces(PIE_PATH)
-    # yale_train_X, yale_train_y, yale_test_X, yale_test_y = load_all_faces(YALE_PATH)
+    # pie_train_X, pie_train_y, pie_test_X, pie_test_y = load_all_faces(PIE_PATH)
+    yale_train_X, yale_train_y, yale_test_X, yale_test_y = load_all_faces(YALE_PATH)
 
     # show_face(pie_train_X[0][1])
     # show_face(yale_train_X[0][1])
@@ -93,19 +93,13 @@ if __name__ == '__main__':
     # print("Best estimator:", model.best_estimator_)
     # print(model.score(pie_test_X[0], pie_test_y[0]))
 
-
-    results = []
     for i in range(NumFILES):
       print("="*50)
       print("For i =", i)
-      model = train_knn(pie_train_X[i], pie_train_y[i])
-      report = evaluate(pie_test_X[i], pie_test_y[i], model)
-      results.append(report)
 
-    print('='*50)
-    print('On average')
-    print("Accuracy:", report['accuracy'])
-    print("Precision:", report['macro avg']['precision'])
-    print("Recall:", report['macro avg']['recall'])
-    print("F1-Score:", report['macro avg']['f1-score'])
-    print("AUC:", report['auc'])
+      # model = train_knn(pie_train_X[i], pie_train_y[i])
+      # report = evaluate(pie_test_X[i], pie_test_y[i], model)
+
+      model = train_knn(yale_train_X[i], yale_train_y[i])
+      report = evaluate(yale_test_X[i], yale_test_y[i], model)
+

@@ -28,6 +28,7 @@ YALE_PATH = 'YaleB_32x32'
 INIT_LR = 1e-3
 BS = 32
 norm_size = 32
+NumFILES = 10
 
 
 def args_parse():
@@ -194,15 +195,14 @@ if __name__=='__main__':
         classes = 38
         print("[INFO] loading YALE images...")
 
-    train_file_path = data_path + '/StTrainFile1.txt'
-    test_file_path = data_path + '/StTestFile1.txt'
-    # trainX, trainY = load_data(train_file_path)
-    # testX, testY = load_data(test_file_path)
+    for i in range(NumFILES):
+        train_file_path = data_path + f'/StTrainFile{i + 1}.txt'
+        test_file_path = data_path + f'/StTestFile{i + 1}.txt'
 
-    trainX, trainY = load_data(train_file_path, mode = args['network'], class_num = classes)
-    testX, testY = load_data(test_file_path, mode = args['network'], class_num = classes)
+        trainX, trainY = load_data(train_file_path, mode=args['network'], class_num=classes)
+        testX, testY = load_data(test_file_path, mode=args['network'], class_num=classes)
 
-    aug = ImageDataGenerator()
-    train_dnn(aug,trainX,trainY,testX,testY, args['network'], int(args['epoch']), class_num = classes)
-    predict(testX, testY)
+        aug = ImageDataGenerator()
+        train_dnn(aug,trainX,trainY,testX,testY, args['network'], int(args['epoch']), class_num=classes)
+        predict(testX, testY)
 
